@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>RbxShop</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('logotip.png') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+    h1 {
+      margin-top: 60px;
+      font-size: 48px;
+      text-shadow: 0 0 10px #000;
+    }
+    .logo {
+      width: 100px;
+      margin-top: 30px;
+      animation: rotate 4s infinite linear;
+    }
+    button {
+      margin-top: 40px;
+      padding: 20px 40px;
+      font-size: 24px;
+      border: none;
+      border-radius: 10px;
+      background: #444;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.5s ease-in-out;
+    }
+    button:hover {
+      transform: scale(1.1);
+    }
+    #formContainer {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+    #formContainer.show {
+      display: flex;
+      animation: zoomIn 0.8s forwards;
+    }
+    .form-box {
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 15px;
+      color: white;
+      text-align: left;
+      width: 300px;
+    }
+    .form-box input, .form-box label {
+      width: 100%;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    .form-box input[type="checkbox"] {
+      width: auto;
+    }
+    .form-box button {
+      width: 100%;
+      margin-top: 20px;
+    }
+    a {
+      color: #4aa1ff;
+      text-decoration: underline;
+    }
+    #successMsg {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #2ecc71;
+      padding: 15px 25px;
+      border-radius: 10px;
+      font-size: 18px;
+      display: none;
+      z-index: 99;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <h1>RbxShop</h1>
+  <img src="logotip.png" alt="logo" class="logo">
+  <button onclick="showForm()">Перейти к продуктам</button>
+
+  <div id="successMsg">✅ Заказ выполнен! Ожидайте письмо на почту...</div>
+
+  <div id="formContainer">
+    <div class="form-box">
+      <label>Ссылка на игру:</label>
+      <input type="url" placeholder="https://roblox.com/..." id="game">
+
+      <label>Ссылка на профиль:</label>
+      <input type="url" placeholder="https://roblox.com/users/..." id="profile">
+
+      <label>Ссылка на геймпасс:</label>
+      <input type="url" placeholder="https://roblox.com/game-pass/..." id="gamepass">
+
+      <label>Email:</label>
+      <input type="email" placeholder="example@email.com" id="email">
+
+      <label>
+        <input type="checkbox" id="agree"> Я соглашаюсь с <a href="oferta.html" target="_blank">офертой</a>
+      </label>
+
+      <button onclick="submitForm()">Продолжить</button>
+    </div>
+  </div>
+
+  <script>
+    function showForm() {
+      const form = document.getElementById("formContainer");
+      form.classList.add("show");
+    }
+
+    function submitForm() {
+      const game = document.getElementById("game").value;
+      const profile = document.getElementById("profile").value;
+      const gamepass = document.getElementById("gamepass").value;
+      const email = document.getElementById("email").value;
+      const agree = document.getElementById("agree").checked;
+
+      if (!agree) {
+        alert("Вы должны согласиться с офертой!");
+        return;
+      }
+      if (!email || !game || !profile || !gamepass) {
+        alert("Пожалуйста, заполните все поля!");
+        return;
+      }
+
+      const webhookUrl = "https://discord.com/api/webhooks/1367415491009843262/27EPcawc1Jp7PdciEIzYY8w8GtpxOwTPv2KrWhmC5dRnAdQYFqnjr6zSnvUwnhZYlVYJ";
+
+      const content = {
+        content: `🛒 Новая заявка с RbxShop:\\n
+🔗 Игра: ${game}
+👤 Профиль: ${profile}
+🎮 Геймпасс: ${gamepass}
+📧 Email: ${email}`
+      };
+
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(content)
+      })
+      .then(() => {
+        document.getElementById("successMsg").style.display = "block";
+        setTimeout(() => {
+          window.location.href = "https://rbxshop.xyz";
+        }, 2500);
+      })
+      .catch(() => {
+        alert("Ошибка отправки. Попробуйте позже.");
+      });
+    }
+  </script>
+</body>
+</html>
