@@ -1,187 +1,108 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>RbxShop</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('logotip.png') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      text-align: center;
-      overflow: hidden;
-    }
-    h1 {
-      margin-top: 60px;
-      font-size: 48px;
-      text-shadow: 0 0 10px #000;
-    }
-    .logo {
-      width: 100px;
-      margin-top: 30px;
-      animation: rotate 4s infinite linear;
-    }
-    button {
-      position: absolute;
-      bottom: 50px; /* Размещение кнопки ниже */
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 20px 40px;
-      font-size: 24px;
-      border: none;
-      border-radius: 50px;
-      background: linear-gradient(45deg, #4a90e2, #50e3c2);
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-    button:hover {
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-    }
-    button:focus {
-      outline: none;
-    }
-    #formContainer {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.9);
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-    }
-    #formContainer.show {
-      display: flex;
-      animation: zoomIn 0.8s forwards;
-    }
-    .form-box {
-      background: #1a1a1a;
-      padding: 30px;
-      border-radius: 15px;
-      color: white;
-      text-align: left;
-      width: 300px;
-    }
-    .form-box input, .form-box label {
-      width: 100%;
-      margin-top: 10px;
-      font-size: 16px;
-    }
-    .form-box input[type="checkbox"] {
-      width: auto;
-    }
-    .form-box button {
-      width: 100%;
-      margin-top: 20px;
-    }
-    a {
-      color: #4aa1ff;
-      text-decoration: underline;
-    }
-    #successMsg {
-      position: fixed;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #2ecc71;
-      padding: 15px 25px;
-      border-radius: 10px;
-      font-size: 18px;
-      display: none;
-      z-index: 99;
-    }
-
-    @keyframes zoomIn {
-      from { transform: scale(0); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Технические работы</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #181818;
+            color: #fff;
+            overflow: hidden;
+        }
+        #passwordModal {
+            position: fixed;
+            z-index: 9999;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #passwordForm {
+            background: #222;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px #000;
+            text-align: center;
+        }
+        #passwordForm h2 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        #passwordForm p {
+            color: #bbb;
+            margin-bottom: 20px;
+        }
+        #passwordInput {
+            padding: 10px 15px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        #error {
+            color: #ff4444;
+            margin-bottom: 10px;
+            display: none;
+        }
+        #message {
+            color: #2ecc71;
+            margin-bottom: 10px;
+            display: none;
+        }
+        #passwordForm button {
+            padding: 10px 25px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            background: #4a90e2;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <h1>RbxShop</h1>
-  <img src="logotip.png" alt="logo" class="logo">
-  <button onclick="showForm()">Перейти к продуктам</button>
-
-  <div id="successMsg">✅ Заказ выполнен! Ожидайте письмо на почту...</div>
-
-  <div id="formContainer">
-    <div class="form-box">
-      <label>Ссылка на игру:</label>
-      <input type="url" placeholder="https://roblox.com/..." id="game">
-
-      <label>Ссылка на профиль:</label>
-      <input type="url" placeholder="https://roblox.com/users/..." id="profile">
-
-      <label>Ссылка на геймпасс:</label>
-      <input type="url" placeholder="https://roblox.com/game-pass/..." id="gamepass">
-
-      <label>Email:</label>
-      <input type="email" placeholder="example@email.com" id="email">
-
-      <label>
-        <input type="checkbox" id="agree"> Я соглашаюсь с <a href="oferta.html" target="_blank">офертой</a>
-      </label>
-
-      <button onclick="submitForm()">Продолжить</button>
+    <!-- Форма для пароля -->
+    <div id="passwordModal">
+        <form id="passwordForm">
+            <h2>Технические работы</h2>
+            <p>Сайт временно недоступен. Введите пароль для доступа:</p>
+            <input id="passwordInput" type="password" placeholder="Пароль">
+            <div id="error"></div>
+            <div id="message"></div>
+            <button type="submit">Войти</button>
+        </form>
     </div>
-  </div>
-
-  <script>
-    function showForm() {
-      const form = document.getElementById("formContainer");
-      form.classList.add("show");
-    }
-
-    function submitForm() {
-      const game = document.getElementById("game").value;
-      const profile = document.getElementById("profile").value;
-      const gamepass = document.getElementById("gamepass").value;
-      const email = document.getElementById("email").value;
-      const agree = document.getElementById("agree").checked;
-
-      if (!agree) {
-        alert("Вы должны согласиться с офертой!");
-        return;
-      }
-      if (!email || !game || !profile || !gamepass) {
-        alert("Пожалуйста, заполните все поля!");
-        return;
-      }
-
-      const webhookUrl = "https://discord.com/api/webhooks/1367415491009843262/27EPcawc1Jp7PdciEIzYY8w8GtpxOwTPv2KrWhmC5dRnAdQYFqnjr6zSnvUwnhZYlVYJ";
-
-      const content = {
-        content: `🛒 Новая заявка с RbxShop:\\n
-🔗 Игра: ${game}
-👤 Профиль: ${profile}
-🎮 Геймпасс: ${gamepass}
-📧 Email: ${email}`
-      };
-
-      fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(content)
-      })
-      .then(() => {
-        document.getElementById("successMsg").style.display = "block";
-        setTimeout(() => {
-          window.location.href = "https://rbxshop.xyz";
-        }, 2500);
-      })
-      .catch(() => {
-        alert("Ошибка отправки. Попробуйте позже.");
-      });
-    }
-  </script>
+    <script>
+        const encoded = "MjUwNjIwMTRScg=="; // base64 от "25062014Rr"
+        function decode(str) {
+            return atob(str);
+        }
+        const passwordForm = document.getElementById('passwordForm');
+        const passwordInput = document.getElementById('passwordInput');
+        const error = document.getElementById('error');
+        const message = document.getElementById('message');
+        passwordForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            error.style.display = 'none';
+            message.style.display = 'none';
+            if (passwordInput.value === decode(encoded)) {
+                message.textContent = 'Пароль правильный! Перенаправление через 5 секунд...';
+                message.style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = 'adn.html';
+                }, 5000);
+            } else {
+                error.textContent = 'Неверный пароль!';
+                error.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        });
+    </script>
 </body>
 </html>
